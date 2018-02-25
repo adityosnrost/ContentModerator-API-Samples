@@ -9,7 +9,6 @@ namespace VideoModeration
 {
     class Helpers
     {
-
         /// <summary>
         /// Creates a media context from azure credentials
         /// </summary>
@@ -25,6 +24,13 @@ namespace VideoModeration
 
             // Create a media context
             Globals._context = new CloudMediaContext(new Uri(Globals.REST_API_ENDPOINT), tokenProvider);
+        }
+
+        public static IAsset GetAssetFromMediaService(string assetId)
+        {
+            IAsset mediaAsset = Globals._context.Assets.Where(a => a.Id == assetId).FirstOrDefault();
+
+            return mediaAsset;
         }
 
         /// <summary>

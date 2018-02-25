@@ -8,11 +8,11 @@ namespace VideoModeration
 {
     class Secrets
     {
-        public const string CLIENT_ID = "YOUR AZURE MEDIA SERVICES ACCOUNT CLIENT ID";
-        public const string CLIENT_SECRET = "YOUR AZURE MEDIA SERVICES ACCOUNT CLIENT SECRET
+        public const string CLIENT_ID = "";
+        public const string CLIENT_SECRET = "";
 
         // REST API endpoint, for example "https://accountname.restv2.westcentralus.media.azure.net/API".      
-        public const string REST_API_ENDPOINT = "YOUR AMS ACCOUNT API ENDPOINT";
+        public const string REST_API_ENDPOINT = "";
 
     }
 }

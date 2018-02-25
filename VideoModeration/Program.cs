@@ -18,8 +18,14 @@ namespace VideoModeration
             // Create Azure Media Context
             Helpers.CreateMediaContext();
 
-            // Use a file as the input.
-            IAsset asset = Helpers.CreateAssetfromFile();
+            // Set if program is running well
+            //bool response = true;
+
+            // Use a local file as the input.
+            //IAsset asset = Helpers.CreateAssetfromFile();
+
+            // Use Asset from Media Service
+            IAsset asset = Helpers.GetAssetFromMediaService("");
 
             // Then submit the asset to Content Moderator
             RunContentModeratorJob(asset);
@@ -38,14 +44,13 @@ namespace VideoModeration
             IMediaProcessor mp = Globals._context.MediaProcessors.GetLatestMediaProcessorByName(Globals.MEDIA_PROCESSOR);
 
             // create Job with Content Moderator task
-            IJob job = Globals._context.Jobs.Create(String.Format("Content Moderator {0}",
-                asset.AssetFiles.First() + "_" + Guid.NewGuid()));
+            IJob job = Globals._context.Jobs.Create(String.Format("Content Moderator {0}", Guid.NewGuid()));
 
             ITask contentModeratorTask = job.Tasks.AddNew("Adult and racy classifier task",
                 mp, configuration,
                 TaskOptions.None);
             contentModeratorTask.InputAssets.Add(asset);
-            contentModeratorTask.OutputAssets.AddNew("Adult and racy classifier output",
+            contentModeratorTask.OutputAssets.AddNew(String.Format("Adult and racy classifier output {0}", Guid.NewGuid()),
             AssetCreationOptions.None);
 
             job.Submit();
@@ -88,7 +93,7 @@ namespace VideoModeration
                 error.Message));
             }
 
-            DownloadAsset(job.OutputMediaAssets.First(), Globals.OUTPUT_FOLDER);
+            //DownloadAsset(job.OutputMediaAssets.First(), Globals.OUTPUT_FOLDER);
         }
 
         /// <summary>
